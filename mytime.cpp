@@ -357,7 +357,7 @@ void SetSystemTime(double UTCdaytime)
 	struct timezone tz;  //本地时间
 	if (!settimeofday(&tv, NULL))
 	{
-		unsigned long dwError = GetLastError();
+		//unsigned long dwError = GetLastError();
 		cout << "Set System Time Error : 程序是否未以管理员方式启动？" << endl;
 	}
 	return;
