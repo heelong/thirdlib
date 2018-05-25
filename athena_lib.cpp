@@ -126,7 +126,7 @@ void _splitpath(const char *path, char *drive, char *dir, char *fname, char *ext
 		return;
 	}
 
-	p_whole_name = rindex(path, '/');
+	//p_whole_name = rindex(path, '/');
 	if (NULL != p_whole_name)
 	{
 		p_whole_name++;
@@ -145,7 +145,7 @@ static void _split_whole_name(const char *whole_name, char *fname, char *ext)
 {
 	char *p_ext;
 
-	p_ext = rindex(whole_name, '.');
+	//p_ext = rindex(whole_name, '.');
 	if (NULL != p_ext)
 	{
 		strcpy(ext, p_ext);
