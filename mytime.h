@@ -42,7 +42,7 @@ double GetSysTemUTC();
 void UTC_To_HMS(double Seconds);
 
 double UTCStringTotime(unsigned long long TimeString);
-
+void SetSystemTime(double UTCdaytime);
 
 
 class NAVI_SYS_TIME {

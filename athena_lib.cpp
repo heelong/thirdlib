@@ -103,28 +103,6 @@ void _splitpath(const char *path, char *drive, char *dir, char *fname, char *ext
 static void _split_whole_name(const char *whole_name, char *fname, char *ext);
 #endif
 
-/* main test */
-int main(void)
-{
-	char *path = "/home/test/dir/f123.txt";
-	// char *path = "/home/test/dir/123.txt";
-	// char *path = "/home/test/dir/123";
-	// char *path = "123";
-	// char *path = "123.txt";
-
-	char drive[128];
-	char dir[128];
-	char fname[128];
-	char ext[128];
-
-	_splitpath(path, drive, dir, fname, ext);
-	printf("path  = %s\n", path);
-	printf("dir   = %s\n", dir);
-	printf("fname = %s\n", fname);
-	printf("ext   = %s\n", ext);
-
-	return 0;
-}
 
 #ifndef WIN32
 void _splitpath(const char *path, char *drive, char *dir, char *fname, char *ext)

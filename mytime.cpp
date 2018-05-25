@@ -302,4 +302,66 @@ void UTC_To_HMS(double Seconds)
 	cout << pTime << endl;
 }
 
+void SetSystemTime(double UTCdaytime)
+{
+	time_t rawtime;
+	struct tm  timeinfo;
+	time(&rawtime);
+#ifdef _WIN32
+	localtime_s(&timeinfo, &rawtime);
+#else
+	localtime_r(&rawtime, &timeinfo);
+#endif
+
+	int nGPS = int(UTCdaytime);
+	int Day2 = nGPS / (24 * 3600);
+	nGPS -= Day2 * (24 * 3600);
+	int Hour2 = nGPS / 3600;
+	nGPS -= Hour2 * 3600;
+	int Minutes2 = nGPS / 60;
+	nGPS -= Minutes2 * 60;
+	int Seconds2 = nGPS;
+
+#ifdef _WIN32
+	SYSTEMTIME timestru;
+	timestru.wYear = timeinfo.tm_year + 1900;
+	timestru.wMonth = timeinfo.tm_mon + 1;
+	timestru.wDayOfWeek = timeinfo.tm_wday; //星期
+	timestru.wDay = timeinfo.tm_mday;
+	timestru.wHour = Hour2;
+	timestru.wMinute = Minutes2;
+	timestru.wSecond = Seconds2;
+	timestru.wMilliseconds = unsigned short(1000.0*(UTCdaytime - int(UTCdaytime)));//精确到毫秒
+
+	if (!SetSystemTime(&timestru)) //设置系统时间
+	{
+		DWORD dwError = GetLastError();
+		cout << "Set System Time Error : 程序是否未以管理员方式启动？" << endl;
+	}
+	return;
+#else
+	time_t time_p;
+	struct tm time_tm;
+	time_tm.tm_year = timeinfo.tm_year + 1900;
+	time_tm.tm_mon = timeinfo.tm_mon + 1;
+	time_tm.tm_yday = timeinfo.tm_yday;
+	time_tm.tm_wday = timeinfo.tm_wday; //星期
+	time_tm.tm_mday = timeinfo.tm_mday;
+	time_tm.tm_hour = Hour2;
+	time_tm.tm_min = Minutes2;
+	time_tm.tm_sec = Seconds2;
+	time_p = mktime(&time_tm);  //  转换成从1970年1月1日00时00分00秒至今的GMT时间经过的秒数
+	struct timeval tv; //  秒、微秒
+	tv.tv_sec = time_p;
+	tv.tv_usec = long(1000.0*(UTCdaytime - int(UTCdaytime))*1000.0);//精确到微秒
+	struct timezone tz;  //本地时间
+	if (!settimeofday(&tv, NULL))
+	{
+		unsigned long dwError = GetLastError();
+		cout << "Set System Time Error : 程序是否未以管理员方式启动？" << endl;
+	}
+	return;
+#endif
+}
+
 

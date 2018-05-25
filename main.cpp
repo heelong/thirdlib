@@ -14,6 +14,13 @@
 
 int main()
 {
+	char str[256]; int i = 12015561;
+#ifdef _WIN32
+	sprintf_s(str, strlen(str), "%d", i);
+#else
+	snprintf(str, sizeof(str), "%d", i);
+#endif
+	std::cout << str << std::endl;
 	while (1)
 	{
 		std::cout.precision(100);
