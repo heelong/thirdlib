@@ -14,6 +14,24 @@
 
 int main()
 {
+		char *path = "/home/test/dir/f123.txt";
+		// char *path = "/home/test/dir/123.txt";
+		// char *path = "/home/test/dir/123";
+		// char *path = "123";
+		// char *path = "123.txt";
+	
+		char drive[128];
+		char dir[128];
+		char fname[128];
+		char ext[128];
+	
+		_splitpath(path, drive, dir, fname, ext);
+		printf("path  = %s\n", path);
+		printf("dir   = %s\n", dir);
+		printf("fname = %s\n", fname);
+		printf("ext   = %s\n", ext);
+	
+
 	char str[256]; int i = 12015561;
 #ifdef _WIN32
 	sprintf_s(str, strlen(str), "%d", i);

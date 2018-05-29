@@ -6,7 +6,8 @@
 #include <limits>
 #include <stdlib.h>
 #include <wchar.h>
-
+#include <stdio.h>
+#include <string.h>
 void findFilename(char *str, char *dir, std::vector<std::string> &fileVec)
 {
 #ifdef _WIN32
@@ -94,14 +95,6 @@ void findFilename(char *str, char *dir, std::vector<std::string> &fileVec)
 	return;
 }
 
-#include <stdio.h>
-#include <string.h>
-
-#ifndef WIN32
-void _splitpath(const char *path, char *drive, char *dir, char *fname, char *ext);
-
-static void _split_whole_name(const char *whole_name, char *fname, char *ext);
-#endif
 
 
 #ifndef WIN32
