@@ -8,7 +8,7 @@
 #include <wchar.h>
 #include <stdio.h>
 #include <string.h>
-void findFilename(char *str, char *dir, std::vector<std::string> &fileVec)
+void findFilename(char *str, char *dir, std::vector<std::string> &fileVec)//不支持中文路径
 {
 #ifdef _WIN32
 	struct _finddata_t FileInfo;

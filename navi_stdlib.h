@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <string>
 #include <string.h>
-typedef wchar_t cqWCHAR;//16位
-typedef char cqCHAR;           //8位
 typedef int int32;
 typedef unsigned int uint32;
 typedef long long int64;
@@ -37,38 +35,38 @@ typedef signed char int8;
 
 
 //返回字符串长度
-size_t cq_wcslen(const cqWCHAR* s);
+size_t navi_wcslen(const wchar_t* s);
 
 //返回字符串s的长度
-size_t cq_strlen(const cqCHAR* s);
+size_t navi_strlen(const char* s);
 
 //返回值：s1，字符串s2的前count个字符拷贝到字符串s1
-cqCHAR* cq_strncpy(cqCHAR* s1, const cqCHAR* s2, size_t count);
+char* navi_strncpy(char* s1, const char* s2, size_t count);
 
 //wchar_t字符串src转为char字符串target
 
-void cq_wchar2char(const cqWCHAR* src, cqCHAR*target, size_t &targetSize);
+void navi_wchar2char(const wchar_t* src, char*target, size_t &targetSize);
 
 //char字符串src转为wchar_t字符串target
-void cq_char2wchar(const cqCHAR* src, cqWCHAR* target, size_t &targetSize);
+void navi_char2wchar(const char* src, wchar_t* target, size_t &targetSize);
 
 //返回值：s1，字符串s2添加到到字符串s1的结尾
-cqWCHAR* cq_wcscat(cqWCHAR* s1, const cqWCHAR* s2);
+wchar_t* navi_wcscat(wchar_t* s1, const wchar_t* s2);
 
 //返回值：s1，字符串s2添加到到字符串s1的结尾
-cqCHAR* cq_strcat(cqCHAR* s1, const cqCHAR* s2);
+char* navi_strcat(char* s1, const char* s2);
 
 /*当s1<s2时，返回为负数；
 当s1==s2时，返回值= 0；
 当s1>s2时，返回正数
 */
-int32 cq_strcmp(const cqCHAR* s1, const cqCHAR* s2);
+int32 navi_strcmp(const char* s1, const char* s2);
 
 //char字符串转int32
-int32 cq_atoi(const cqCHAR* s);
+int32 navi_atoi(const char* s);
 
 //char字符串转int64
-int64 cq_atoi64(const cqCHAR* p);
+int64 navi_atoi64(const char* p);
 
 /**	@brief 将 Unicode(UCS-2) 字符串编码为 UTF-8 字符串 
 	@param [in] src
@@ -82,13 +80,13 @@ int64 cq_atoi64(const cqCHAR* p);
 	@return
 		编码后的内容需要占用的存储空间大小(包括结尾的0)，单位：字节。
 	@details
-		cq_encodeUtf8() 将 src 中存储的 Unicode 字符串按 UTF-8 编码后存储到 dest 中。
+		navi_encodeUtf8() 将 src 中存储的 Unicode 字符串按 UTF-8 编码后存储到 dest 中。
 		如果 dest 中的空间无法存放下编码后的完整结果，则只存储部分结果。
 		只要 destSize 大于 0，就能保证函数调用后的 dest 中的内容以 0 结尾。
 	@note
-		用 cq_encodeUtf8(src, srcSize, NULL, 0) 获取获取 src 编码后内容需要占用的存储空间大小。
+		用 navi_encodeUtf8(src, srcSize, NULL, 0) 获取获取 src 编码后内容需要占用的存储空间大小。
 */
-size_t cq_encodeUtf8(const cqWCHAR* src, size_t srcSize, cqCHAR* dest, size_t destSize);
+size_t navi_encodeUtf8(const wchar_t* src, size_t srcSize, char* dest, size_t destSize);
 
 /**	@brief 将 UTF-8 字符串解码为 Unicode(UCS-2) 字符串
 	@param [in] src
@@ -102,13 +100,13 @@ size_t cq_encodeUtf8(const cqWCHAR* src, size_t srcSize, cqCHAR* dest, size_t de
 	@return
 		src 中的内容解码后需要占用的存储空间大小(包括结尾的0)，单位：字符。
 	@details
-		cq_decodeUtf8() 将 src 中存储的 UTF-8 字符串解码后存储到 dest 中。
+		navi_decodeUtf8() 将 src 中存储的 UTF-8 字符串解码后存储到 dest 中。
 		如果 dest 无法存放下解码后的完整结果，则只存储部分结果。
 		只要 destSize 大于 0，就能保证函数调用后 dest 中的内容以 0 结尾。
 	@note
-		用 cq_decodeUtf8(src, srcSize, NULL, 0) 可以获取 src 解码后内容需要占用的存储空间大小。
+		用 navi_decodeUtf8(src, srcSize, NULL, 0) 可以获取 src 解码后内容需要占用的存储空间大小。
 */
-size_t cq_decodeUtf8(const cqCHAR* src, size_t srcSize, cqWCHAR* dest, size_t destSize);
+size_t navi_decodeUtf8(const char* src, size_t srcSize, wchar_t* dest, size_t destSize);
 
 
 /**	@brief 对字符串进行分割
@@ -121,7 +119,7 @@ size_t cq_decodeUtf8(const cqCHAR* src, size_t srcSize, cqWCHAR* dest, size_t de
 	@return
 		返回当前分割的字符串	
 */
-cqCHAR* cq_strtok_s(cqCHAR* buf, const cqCHAR* spliters, cqCHAR** context);
+char* navi_strtok_s(char* buf, const char* spliters, char** context);
 
 //stdlib初始化
 void Stdlib_init(void);

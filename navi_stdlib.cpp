@@ -7,9 +7,9 @@
 #include <stdlib.h>
 #include <wchar.h>
 
-/*返回字符串长度,程序中使用时会先定义cqWCHAR* s的长度，有值的地方为非0，无值的地方为0
+/*返回字符串长度,程序中使用时会先定义wchar_t* s的长度，有值的地方为非0，无值的地方为0
 通过是否为0判断结尾*/
-size_t cq_wcslen(const cqWCHAR* s)
+size_t navi_wcslen(const wchar_t* s)
 {
 	if(s==NULL)
 		return 0;
@@ -26,7 +26,7 @@ size_t cq_wcslen(const cqWCHAR* s)
 /*
 判断字符数组长度
 */
-size_t cq_strlen(const cqCHAR* s)
+size_t navi_strlen(const char* s)
 {
 	if (s == NULL)
 		return 0;
@@ -43,13 +43,13 @@ size_t cq_strlen(const cqCHAR* s)
 }
 
 //返回值：s1，字符串s2的前count个字符拷贝到字符串s1
-cqCHAR* cq_strncpy(cqCHAR* s1, const cqCHAR* s2, size_t count)
+char* navi_strncpy(char* s1, const char* s2, size_t count)
 {
 	if (s2 == NULL)
 		return NULL;
 	size_t  i = 0;
-	size_t len = cq_strlen(s2);
-	cqCHAR* s=s1;
+	size_t len = navi_strlen(s2);
+	char* s=s1;
 	len = (len > count) ? count : len;
 	while ((i < len) && ((*s2)!='\0'))
 	{
@@ -61,37 +61,37 @@ cqCHAR* cq_strncpy(cqCHAR* s1, const cqCHAR* s2, size_t count)
 }
 
 //wchar_t字符串src转为char字符串target,宽位转换为窄位需要注意溢出
-void cq_wchar2char(const cqWCHAR* src, cqCHAR*target, size_t &targetSize)
+void navi_wchar2char(const wchar_t* src, char*target, size_t &targetSize)
 {
 	if (src == NULL)
 		return ;
 	size_t i=0;
-	size_t len = cq_wcslen(src);
-	cqCHAR*target_t = target;
+	size_t len = navi_wcslen(src);
+	char*target_t = target;
 	while (*src != 0)
 	{
 		//0x0080 0000,0000 1000,0000
 		if (0x0080 > *src)
 		{
 			//const_cast;
-			*target_t=static_cast <cqCHAR>(*src);//16位转换为8位窄字符
+			*target_t=static_cast <char>(*src);//16位转换为8位窄字符
 			++target_t; 
 			targetSize += 1;//增加一个字节
 		}
 		//0x0800 0000 0111 0000,0000; 00000aaa bbbbbbbb ==> 110aaabb 10bbbbbb
 		else if (0x0800 > *src)
 		{
-			*target_t = (static_cast <cqCHAR>(*src >> 6)) | 0xc0;//11000000，获取前八位的后面三位
-			*(target_t + 1) = (static_cast <cqCHAR>(*src & 0x003F)) | 0x80;//获取后八位
+			*target_t = (static_cast <char>(*src >> 6)) | 0xc0;//11000000，获取前八位的后面三位
+			*(target_t + 1) = (static_cast <char>(*src & 0x003F)) | 0x80;//获取后八位
 			target_t += 2; 
 			targetSize += 2;//增加两个字节
 		}
 		//aaaaaaaa bbbbbbbb ==> 1110aaaa 10aaaabb 10bbcccccc 
 		else
 		{
-			*target_t = (static_cast <cqCHAR>(*src >> 12)) | 0xE0;
-			*(target_t + 1) = (static_cast <cqCHAR>((*src & 0x0FC0) >> 6)) | 0x80;
-			*(target_t + 2) = (static_cast <cqCHAR>(*src & 0x003F)) | 0x80;
+			*target_t = (static_cast <char>(*src >> 12)) | 0xE0;
+			*(target_t + 1) = (static_cast <char>((*src & 0x0FC0) >> 6)) | 0x80;
+			*(target_t + 2) = (static_cast <char>(*src & 0x003F)) | 0x80;
 			target_t += 3; 
 			targetSize += 3;//增加三个字节
 		}  
@@ -101,44 +101,46 @@ void cq_wchar2char(const cqWCHAR* src, cqCHAR*target, size_t &targetSize)
 }
 
 //char字符串src转为wchar_t字符串target
-void cq_char2wchar(const cqCHAR* src, cqWCHAR* target, size_t &targetSize)
+void navi_char2wchar(const char* src, wchar_t* target, size_t &targetSize)
 {
 	if (src == NULL)
 		return;
 	size_t i = 0;
-	size_t len = cq_strlen(src);
-	cqWCHAR*_target = target;
+	size_t len = navi_strlen(src);
+	wchar_t*_target = target;
 	while (i < len)
 	{
 		*_target++ = *src++;
 		i++;
 	}
+	*_target = '\0';
 	targetSize = len;
 }
 
 //返回值：s1，字符串s2添加到到字符串s1的结尾
-cqWCHAR* cq_wcscat(cqWCHAR* s1, const cqWCHAR* s2)
+wchar_t* navi_wcscat(wchar_t* s1, const wchar_t* s2)
 {
 	if (s2 == NULL)
 		return s1;
-	size_t len1 = cq_wcslen(s1);
-	size_t len2 = cq_wcslen(s2);
-	cqWCHAR* s = s1;
+	size_t len1 = navi_wcslen(s1);
+	size_t len2 = navi_wcslen(s2);
+	wchar_t* s = s1;
 	size_t i = 0;
 	while (i++ < len1)
 		s++;
 	i = 0;
 	while (i++ < len2)
 		*s++ = *s2++;
+	*s = '\0';
 	return s1;
 }
 
 //返回值：s1，字符串s2添加到到字符串s1的结尾
-cqCHAR* cq_strcat(cqCHAR* s1, const cqCHAR* s2)
+char* navi_strcat(char* s1, const char* s2)
 {
 	if (s2 == NULL)
 		return s1;
-	cqCHAR* s = s1;
+	char* s = s1;
 	while ((*s) != '\0')
 		s++;
 	while ((*s2) != '\0')
@@ -151,7 +153,7 @@ cqCHAR* cq_strcat(cqCHAR* s1, const cqCHAR* s2)
 当s1==s2时，返回值= 0；
 当s1>s2时，返回正数
 */
-int32 cq_strcmp(const cqCHAR* s1, const cqCHAR* s2)
+int32 navi_strcmp(const char* s1, const char* s2)
 {
 	while ( ((*s1) == (*s2)) && ((*s1) != '\0') && ((*s2) != '\0'))
 	{
@@ -169,7 +171,7 @@ int32 cq_strcmp(const cqCHAR* s1, const cqCHAR* s2)
 }
 
 //char字符串转int32
-int32 cq_atoi(const cqCHAR* s)
+int32 navi_atoi(const char* s)
 {
 	if (s == NULL)
 		return 0;
@@ -198,11 +200,10 @@ int32 cq_atoi(const cqCHAR* s)
 		s++;
 	}
 	return static_cast<int32>(ret*flag);
-
 }
 
 //char字符串转int64
-int64 cq_atoi64(const cqCHAR* p)
+int64 navi_atoi64(const char* p)
 {
 	if (p == NULL)
 		return 0;
@@ -234,11 +235,11 @@ int64 cq_atoi64(const cqCHAR* p)
 }
 
 //将 Unicode(UCS-2) 字符串编码为 UTF-8 字符串 
-size_t cq_encodeUtf8(const cqWCHAR* src, size_t srcSize, cqCHAR* dest, size_t destSize)
+size_t navi_encodeUtf8(const wchar_t* src, size_t srcSize, char* dest, size_t destSize)
 {
 	if (src == NULL)
 		return 0;
-	cqCHAR* out = dest;
+	char* out = dest;
 	if (!dest&&destSize == 0)
 	{
 		while (*src != 0)
@@ -263,7 +264,7 @@ size_t cq_encodeUtf8(const cqWCHAR* src, size_t srcSize, cqCHAR* dest, size_t de
 			if (destSize_t >= destSize)//如果 dest 无法存放下解码后的完整结果，则只存储部分结果。
 				break;
 			/* 1 byte UTF-8 Character.*/
-			*out = static_cast<cqCHAR>(*src);//16位转换为8位窄字符
+			*out = static_cast<char>(*src);//16位转换为8位窄字符
 			out += 1; 
 		}
 		//0x0800 0000 0111 0000,0000
@@ -277,8 +278,8 @@ size_t cq_encodeUtf8(const cqWCHAR* src, size_t srcSize, cqCHAR* dest, size_t de
 				break;
 			}
 			/*2 bytes UTF-8 Character.*/
-			*out = (static_cast<cqCHAR>(*src >> 6)) | 0xc0;//11000000，获取前八位的后面三位
-			*(out + 1) = (static_cast<cqCHAR>(*src & 0x003F)) | 0x80;//获取后八位
+			*out = (static_cast<char>(*src >> 6)) | 0xc0;//11000000，获取前八位的后面三位
+			*(out + 1) = (static_cast<char>(*src & 0x003F)) | 0x80;//获取后八位
 			out += 2; 
 		}
 		//aaaaaaaa bbbbbbbb ==> 1110aaaa 10aaaabb 10bbcccccc 
@@ -291,9 +292,9 @@ size_t cq_encodeUtf8(const cqWCHAR* src, size_t srcSize, cqCHAR* dest, size_t de
 				break;
 			}
 			/* 3 bytes UTF-8 Character .*/
-			*out = (static_cast<cqCHAR>(*src >> 12)) | 0xE0;
-			*(out + 1) = (static_cast<cqCHAR>((*src & 0x0FC0) >> 6)) | 0x80;
-			*(out + 2) = (static_cast<cqCHAR>(*src & 0x003F)) | 0x80;
+			*out = (static_cast<char>(*src >> 12)) | 0xE0;
+			*(out + 1) = (static_cast<char>((*src & 0x0FC0) >> 6)) | 0x80;
+			*(out + 2) = (static_cast<char>(*src & 0x003F)) | 0x80;
 			out += 3; 	
 		}
 		++src;//挪动两个字节  
@@ -304,12 +305,12 @@ size_t cq_encodeUtf8(const cqWCHAR* src, size_t srcSize, cqCHAR* dest, size_t de
 }
 
 //将 UTF-8 字符串解码为 Unicode(UCS-2) 字符串
-size_t cq_decodeUtf8(const cqCHAR* src, size_t srcSize, cqWCHAR* dest, size_t destSize)
+size_t navi_decodeUtf8(const char* src, size_t srcSize, wchar_t* dest, size_t destSize)
 {
 	if (src == NULL)
 		return 0;
-	cqWCHAR temp1, temp2,* dest_t = dest;
-	cqCHAR* in = const_cast<cqCHAR*>(src);
+	wchar_t temp1, temp2,* dest_t = dest;
+	char* in = const_cast<char*>(src);
 	//destSize = 0;
 	if (!dest_t&&destSize == 0)
 	{
@@ -338,7 +339,7 @@ size_t cq_decodeUtf8(const cqCHAR* src, size_t srcSize, cqWCHAR* dest, size_t de
 		//不需要处理，直接拷贝即可  0xxxxxxx ==> 00000000 0xxxxxxxx
 		if (0x00 == (*in & 0x80))
 		{
-			*dest_t = static_cast<cqWCHAR>(*in);
+			*dest_t = static_cast<wchar_t>(*in);
 			in += 1;
 		}
 		//2字节 110xxxxx 10xxxxxx   
@@ -347,11 +348,11 @@ size_t cq_decodeUtf8(const cqCHAR* src, size_t srcSize, cqWCHAR* dest, size_t de
 		else if (0xc0 == (*in & 0xe0)/*前两位为11*/ && 0x80 == (*(in + 1) & 0xc0)/*前两位为10*/)
 		{
 			//0x1f=0001,1111，获得第一个字节的后5位  
-			temp1 = static_cast<cqWCHAR>(*in & 0x1f);//此处需要宽字符，16位
+			temp1 = static_cast<wchar_t>(*in & 0x1f);//此处需要宽字符，16位
 			//左移6位  
 			temp1 <<= 6;//temp1乘以2的6次方
 			//0x3f=0011,1111，获得第二个字节的后6位,加上上面的5位一共有11位  
-			temp1 |= static_cast<cqWCHAR>(*(in + 1) & 0x3f);
+			temp1 |= static_cast<wchar_t>(*(in + 1) & 0x3f);
 			*dest_t = temp1;
 			in += 2;
 		}
@@ -360,13 +361,13 @@ size_t cq_decodeUtf8(const cqCHAR* src, size_t srcSize, cqWCHAR* dest, size_t de
 		else if (0xe0 == (*in & 0xf0) &&0x80 == (*(in + 1) & 0xc0) &&0x80 == (*(in + 2) & 0xc0))
 		{
 			//0x0f=0000,1111,  取出第一个字节的低4位  
-			temp1 = static_cast<cqWCHAR>(*in & 0x0f);
+			temp1 = static_cast<wchar_t>(*in & 0x0f);
 			temp1 <<= 12;
 			//0x3f=0011,1111,取得第二个字节的低6位  
-			temp2 = static_cast<cqWCHAR>(*(in + 1) & 0x3F);
+			temp2 = static_cast<wchar_t>(*(in + 1) & 0x3F);
 			temp2 <<= 6;
 			//取得第三个字节的低6位，最后组成16位  
-			temp1 = temp1 | temp2 | static_cast<cqWCHAR>(*(in + 2) & 0x3F);
+			temp1 = temp1 | temp2 | static_cast<wchar_t>(*(in + 2) & 0x3F);
 			*dest_t = temp1;
 			in += 3;//移动到下一个字符  
 		}
@@ -382,7 +383,7 @@ size_t cq_decodeUtf8(const cqCHAR* src, size_t srcSize, cqWCHAR* dest, size_t de
 }
 
 //字符串分割函数
-cqCHAR* cq_strtok_s(cqCHAR* buf, const cqCHAR* spliters, cqCHAR** context)
+char* navi_strtok_s(char* buf, const char* spliters, char** context)
 {
 #ifdef WIN32
 	//调用C++库函数
