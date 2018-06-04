@@ -15,7 +15,7 @@
 int main()
 {
 
-	char str[250] = "D:\\work";
+	char str[250] = "E:\\e&p";
 	char dir[250] = "docx";
 	_splitpath(str, dir);
 
