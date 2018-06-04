@@ -8,7 +8,7 @@
 #include <wchar.h>
 #include <stdio.h>
 #include <string.h>
-void findFilename(char *str, char *dir, std::vector<std::string> &fileVec)//不支持中文路径
+void findFilename(const char *str,const char *dir, std::vector<std::string> &fileVec)//不支持中文路径
 {
 #ifdef _WIN32
 	struct _finddata_t FileInfo;
@@ -95,61 +95,36 @@ void findFilename(char *str, char *dir, std::vector<std::string> &fileVec)//不�
 	return;
 }
 
-
-
-#ifndef WIN32
-void _splitpath(const char *path, char *drive, char *dir, char *fname, char *ext)
+void _splitpath(const char *path_, const char *ext_)
 {
-	char *p_whole_name;
-
-	drive[0] = '\0';
-	if (NULL == path)
+	char drive[_MAX_DRIVE], dir[_MAX_DIR], ext[_MAX_EXT], fname[_MAX_FNAME];
+	char ProjectfileName_noext[300];
+	std::vector<std::string> fileVec;
+	findFilename(path_, ext_, fileVec);
+	for (int i = 0; i < fileVec.size(); i++)
 	{
-		dir[0] = '\0';
-		fname[0] = '\0';
-		ext[0] = '\0';
-		return;
-	}
-
-	if ('/' == path[strlen(path)])
-	{
-		strcpy(dir, path);
-		fname[0] = '\0';
-		ext[0] = '\0';
-		return;
-	}
-
-	//p_whole_name = rindex(path, '/');
-	if (NULL != p_whole_name)
-	{
-		p_whole_name++;
-		_split_whole_name(p_whole_name, fname, ext);
-
-		snprintf(dir, p_whole_name - path, "%s", path);
-	}
-	else
-	{
-		_split_whole_name(path, fname, ext);
-		dir[0] = '\0';
-	}
-}
-
-static void _split_whole_name(const char *whole_name, char *fname, char *ext)
-{
-	char *p_ext;
-
-	//p_ext = rindex(whole_name, '.');
-	if (NULL != p_ext)
-	{
-		strcpy(ext, p_ext);
-		snprintf(fname, p_ext - whole_name + 1, "%s", whole_name);
-	}
-	else
-	{
-		ext[0] = '\0';
-		strcpy(fname, whole_name);
-	}
-}
-
+		std::cout << fileVec[i] << std::endl;
+#ifdef _WIN32
+		std::cout << "out put for _splitpath_s:" << std::endl;
+		_splitpath_s(fileVec[i].c_str(), drive, _MAX_DRIVE, dir, _MAX_DIR, fname, _MAX_FNAME, ext, _MAX_EXT);
+		printf("path  = %s\n", fileVec[i].c_str());
+		printf("drive   = %s\n", drive);
+		printf("dir   = %s\n", dir);
+		printf("fname = %s\n", fname);
+		printf("ext   = %s\n", ext);
+		_makepath_s(ProjectfileName_noext, _MAX_PATH, drive, dir, fname, "");
+		std::cout << "out put for path_s=  " << ProjectfileName_noext << std::endl;
+#else
+		_splitpath(fileVec[i].c_str(), drive, dir, fname, ext);
+		printf("path  = %s\n", fileVec[i].c_str());
+		printf("drive   = %s\n", drive);
+		printf("dir   = %s\n", dir);
+		printf("fname = %s\n", fname);
+		printf("ext   = %s\n", ext);
+		_makepath(ProjectfileName_noext, drive, dir, fname, "");
+		std::cout << "out put for path_s=  " << ProjectfileName_noext << std::endl;
 #endif
+	}
+}
+
 

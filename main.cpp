@@ -14,81 +14,41 @@
 
 int main()
 {
-//		char *path = "/home/test/dir/f123.txt";
-//		char drive[128];
-//		char dir[128];
-//		char fname[128];
-//		char ext[128];
-//	
-//		_splitpath(path, drive, dir, fname, ext);
-//		printf("path  = %s\n", path);
-//		printf("dir   = %s\n", dir);
-//		printf("fname = %s\n", fname);
-//		printf("ext   = %s\n", ext);
-//	
-//
-//	char str[256]; int i = 12015561;
-//#ifdef _WIN32
-//	sprintf_s(str, strlen(str), "%d", i);
-//#else
-//	snprintf(str, sizeof(str), "%d", i);
-//#endif
-//	std::cout << str << std::endl;
-//	while (1)
-//	{
-//		std::cout.precision(100);
-//		std::cout << GetSysTemUTC() << std::endl;
-//
-//#ifdef _WIN32
-//		Sleep(1000);
-//#else
-//		sleep(1);
-//#endif
-//	}
-	
-	//char str[250] = "E:\\e&p\\PointCloudSegmentation";
-	//char dir[250] = "docx";
-	//std::vector<std::string> fileVec;
-	//findFilename(str, dir, fileVec);
-	//for (int i = 0; i < fileVec.size(); i++)
-	//	std::cout << fileVec[i] << std::endl;
-	size_t len;
 
-	char  b[256] = "F:\\adasis_v2\\中文\\FDNaviLib_win32_0528150100\\ADASRoute.dat";
-	std::cout << b << std::endl;
-	len = navi_strlen(b);
-	std::cout << "test for navi_strlen: " << len << std::endl;
-	char c[50];
-	std::cout << "test for navi_strncpy: " << navi_strncpy(c, b, 13) << std::endl;
-	wchar_t *a = new wchar_t[250];
-	a = L"root\\home\\桌面\\test.txt";
+	char str[250] = "D:\\work";
+	char dir[250] = "docx";
+	_splitpath(str, dir);
 
-	size_t targetSize2 = 0;
-	std::cout << "test for navi_char2wchar: ";
-	//navi_char2wchar(b, a, targetSize2);
-	std::wcout << a << std::endl;
-	std::cout << std::endl;
 
+	//size_t len;
+	//char  b[256] = "F:\\adasis_v2\\中文\\FDNaviLib_win32_0528150100\\ADASRoute.dat";
+	//std::cout << b << std::endl;
+	//len = navi_strlen(b);
+	//std::cout << "test for navi_strlen: " << len << std::endl;
+	//char c[50];
+	//std::cout << "test for navi_strncpy: " << navi_strncpy(c, b, 13) << std::endl;
+	//wchar_t *a = new wchar_t[250];
+	//a = L"root\\home\\桌面\\test.txt";
+	//size_t targetSize2 = 0;
+	//std::cout << "test for navi_char2wchar: ";
+	////navi_char2wchar(b, a, targetSize2);
+	//std::wcout << a << std::endl;
+	//std::cout << std::endl;
 	//
 	//size_t targetSize=0;
 	//navi_wchar2char(a,target,targetSize);
 	//std::cout << "test for navi_wchar2char: " << "16bit char to 8bit char--" << target << std::endl;
-
-
-
 	//navi_wcscat(a,target2);
 	//std::cout << "test for navi_wcscat: ";
 	//size_t lena = navi_wcslen(a);
 	//for (size_t i = 0; i < lena; i++)
 	//	std::cout << char(a[i]);
 	//std::cout << std::endl;
-
 	//navi_strcat(b, target);
 	//std::cout << "test for navi_strcat: ";
 	//size_t lenb = navi_strlen(b);
 	//std::cout <<"len"<< lenb;
 	//std::cout << std::endl;
-
 	//std::cout << "test for navi_strcmp: ";
 	//std::cout << b << std::endl << target << std::endl;
 	//std::cout << navi_strcmp(target, b) << std::endl;
