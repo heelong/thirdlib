@@ -37,3 +37,10 @@ void navi_splitpath(const char *path_, const char *ext_);
 
 
 #endif
+
+#ifndef WIN32
+void _splitpath(const char *path, char *drive, char *dir, char *fname, char *ext);
+
+static void _split_whole_name(const char *whole_name, char *fname, char *ext);
+
+#endif

@@ -115,16 +115,72 @@ void navi_splitpath(const char *path_, const char *ext_)
 		_makepath_s(ProjectfileName_noext, _MAX_PATH, drive, dir, fname, "");
 		std::cout << "out put for path_s=  " << ProjectfileName_noext << std::endl;
 #else
-		splitpath(fileVec[i].c_str(), drive, dir, fname, ext);
+		_splitpath(fileVec[i].c_str(), drive, dir, fname, ext);
 		printf("path  = %s\n", fileVec[i].c_str());
 		printf("drive   = %s\n", drive);
 		printf("dir   = %s\n", dir);
 		printf("fname = %s\n", fname);
 		printf("ext   = %s\n", ext);
-		makepath(ProjectfileName_noext, drive, dir, fname, "");
+		//makepath(ProjectfileName_noext, drive, dir, fname, "");
 		std::cout << "out put for path_s=  " << ProjectfileName_noext << std::endl;
 #endif
 	}
 }
+
+#ifndef WIN32
+void _splitpath(const char *path, char *drive, char *dir, char *fname, char *ext)
+{
+	char *p_whole_name;
+
+	drive[0] = '\0';
+	if (NULL == path)
+	{
+		dir[0] = '\0';
+		fname[0] = '\0';
+		ext[0] = '\0';
+		return;
+	}
+
+	if ('/' == path[strlen(path)])
+	{
+		strcpy(dir, path);
+		fname[0] = '\0';
+		ext[0] = '\0';
+		return;
+	}
+
+	p_whole_name = rindex(path, '/');
+	if (NULL != p_whole_name)
+	{
+		p_whole_name++;
+		_split_whole_name(p_whole_name, fname, ext);
+
+		snprintf(dir, p_whole_name - path, "%s", path);
+	}
+	else
+	{
+		_split_whole_name(path, fname, ext);
+		dir[0] = '\0';
+	}
+}
+
+static void _split_whole_name(const char *whole_name, char *fname, char *ext)
+{
+	char *p_ext;
+
+	p_ext = rindex(whole_name, '.');
+	if (NULL != p_ext)
+	{
+		strcpy(ext, p_ext);
+		snprintf(fname, p_ext - whole_name + 1, "%s", whole_name);
+	}
+	else
+	{
+		ext[0] = '\0';
+		strcpy(fname, whole_name);
+	}
+}
+
+#endif
 
 
