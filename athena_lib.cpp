@@ -95,7 +95,7 @@ void findFilename(const char *str,const char *dir, std::vector<std::string> &fil
 	return;
 }
 
-void _splitpath(const char *path_, const char *ext_)
+void splitpath(const char *path_, const char *ext_)
 {
 	char drive[_MAX_DRIVE], dir[_MAX_DIR], ext[_MAX_EXT], fname[_MAX_FNAME];
 	char ProjectfileName_noext[300];

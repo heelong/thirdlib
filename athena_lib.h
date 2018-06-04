@@ -33,7 +33,7 @@
 void findFilename(const char *str,const char *dir, std::vector<std::string> &fileVec);
 
 
-void _splitpath(const char *path_, const char *ext_);
+void splitpath(const char *path_, const char *ext_);
 
 
 #endif
