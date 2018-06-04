@@ -95,7 +95,7 @@ void findFilename(const char *str,const char *dir, std::vector<std::string> &fil
 	return;
 }
 
-void splitpath(const char *path_, const char *ext_)
+void navi_splitpath(const char *path_, const char *ext_)
 {
 	char drive[_MAX_DRIVE], dir[_MAX_DIR], ext[_MAX_EXT], fname[_MAX_FNAME];
 	char ProjectfileName_noext[300];
@@ -115,13 +115,13 @@ void splitpath(const char *path_, const char *ext_)
 		_makepath_s(ProjectfileName_noext, _MAX_PATH, drive, dir, fname, "");
 		std::cout << "out put for path_s=  " << ProjectfileName_noext << std::endl;
 #else
-		_splitpath(fileVec[i].c_str(), drive, dir, fname, ext);
+		splitpath(fileVec[i].c_str(), drive, dir, fname, ext);
 		printf("path  = %s\n", fileVec[i].c_str());
 		printf("drive   = %s\n", drive);
 		printf("dir   = %s\n", dir);
 		printf("fname = %s\n", fname);
 		printf("ext   = %s\n", ext);
-		_makepath(ProjectfileName_noext, drive, dir, fname, "");
+		makepath(ProjectfileName_noext, drive, dir, fname, "");
 		std::cout << "out put for path_s=  " << ProjectfileName_noext << std::endl;
 #endif
 	}

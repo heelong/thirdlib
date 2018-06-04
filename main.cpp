@@ -17,7 +17,7 @@ int main()
 
 	char str[250] = "E:\\e&p";
 	char dir[250] = "docx";
-	splitpath(str, dir);
+	navi_splitpath(str, dir);
 
 
 	//size_t len;
