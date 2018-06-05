@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void findFilename(const char *str,const char *dir, std::vector<std::string> &fileVec);
+void findFilename(const char *str, const char *dir, std::vector<std::string> &fileVec);
 
 
 void navi_splitpath(const char *path_, const char *ext_);
@@ -39,8 +39,9 @@ void navi_splitpath(const char *path_, const char *ext_);
 #endif
 
 #ifndef WIN32
-void _splitpath(const char *path, char *drive, char *dir, char *fname, char *ext);
+void splitpath(const char *path, char *drive, char *dir, char *fname, char *ext);
 
-static void _split_whole_name(const char *whole_name, char *fname, char *ext);
+static void split_whole_name(const char *whole_name, char *fname, char *ext);
 
+void makepath(char *path, const char *drive, const char *dir, const char *fname, const char *ext);
 #endif
