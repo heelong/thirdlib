@@ -199,7 +199,8 @@ void makepath(char *path, const char *drive, const char *dir, const char *fname,
 	strcat(path, dir);
 	strcat(path, "/");
 	strcat(path, fname);
-	strcat(path, "");
+	strcat(path, ext);
+	strcat(path, "\0");
 }
 #endif
 

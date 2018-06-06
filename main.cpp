@@ -15,7 +15,7 @@
 int main()
 {
 
-	char str[250] = "E:\\e&p";
+	char str[250] = "D:\\workLearning";
 	char dir[250] = "docx";
 	navi_splitpath(str, dir);
 
