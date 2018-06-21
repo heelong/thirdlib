@@ -35,6 +35,7 @@ void findFilename(const char *str, const char *dir, std::vector<std::string> &fi
 
 void navi_splitpath(const char *path_, const char *ext_);
 
+int itoa_bin(unsigned int data, char *str);
 
 #endif
 

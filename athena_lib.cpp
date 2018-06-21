@@ -94,7 +94,41 @@ void findFilename(const char *str, const char *dir, std::vector<std::string> &fi
 #endif
 	return;
 }
+int itoa_bin(unsigned int data, char *str)
+{
+	if (str == NULL)
+		return -1;
 
+	char *start = str;
+
+	while (data)
+	{
+		if (data & 0x1)
+			*str++ = 0x31; //ASCII 1
+		else
+			*str++ = 0x30; //ASCII 0
+
+		data >>= 1;
+	}
+
+	*str = 0;
+
+	//reverse the order  
+	char *low, *high, temp;
+	low = start, high = str - 1;
+
+	while (low < high)
+	{
+		temp = *low;
+		*low = *high;
+		*high = temp;
+
+		++low;
+		--high;
+	}
+
+	return 0;
+}
 void navi_splitpath(const char *path_, const char *ext_)
 {
 	char drive[_MAX_DRIVE], dir[_MAX_DIR], ext[_MAX_EXT], fname[_MAX_FNAME];

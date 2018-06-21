@@ -11,14 +11,39 @@
 #include<sys/time.h>
 #include<unistd.h>	
 #endif
-
+using namespace std;
 int main()
 {
+    std::cout << "char\t" << sizeof(char) << std::endl;
+    std::cout << "unsigned char\t" << sizeof(unsigned char) << std::endl;
+    std::cout << "char*\t" << sizeof(char*) << std::endl << std::endl;
+
+    std::cout << "int\t" << sizeof(int) << std::endl;
+    std::cout << "unsigned int\t" << sizeof(unsigned int) << std::endl;
+    std::cout << "short\t" << sizeof(short) << std::endl;
+    std::cout << "unsigned short\t" << sizeof(unsigned short) << std::endl;
+    std::cout << "long\t" << sizeof(long) << std::endl;
+    std::cout << "unsigned long\t" << sizeof(unsigned long) << std::endl;
+	std::cout << "unsigned long int\t" << sizeof(unsigned long int) << std::endl;
+    std::cout << "long long\t" << sizeof(long long) << std::endl ;
+	std::cout << "unsigned long long\t" << sizeof(unsigned long long) << std::endl << std::endl;
+	std::cout << "unsigned long long int\t" << sizeof(unsigned long long int) << std::endl << std::endl;
+    std::cout << "float\t" << sizeof(float) << std::endl;
+    std::cout << "double\t" << sizeof(double) << std::endl;
+    std::cout << "long double\t" << sizeof(long double) << std::endl << std::endl;
+	std::cout << "string\t" << sizeof(string) << std::endl << std::endl;
 
 	char str[250] = "D:\\workLearning";
 	char dir[250] = "docx";
 	navi_splitpath(str, dir);
 
+	int i = 1024;
+	char b[33], bs[33],c[33];
+	itoa_bin(i,c);
+	std::cout << c << std::endl;
+	_itoa_s(i, b, 2);
+	sprintf_s(bs, "%032s", b);
+	printf("i=%d, bs=%s\n", i, bs);
 
 	//size_t len;
 	//char  b[256] = "F:\\adasis_v2\\中文\\FDNaviLib_win32_0528150100\\ADASRoute.dat";
