@@ -6,6 +6,16 @@
 #include <string>
 #include <string.h>
 #include <vector>
+#include <iostream>
+#include <vector>
+#include <pcl/point_types.h>
+#include <pcl/io/pcd_io.h>
+#include <pcl/search/search.h>
+#include <pcl/search/kdtree.h>
+#include <pcl/features/normal_3d.h>
+#include <pcl/filters/passthrough.h>
+#include <pcl/segmentation/region_growing.h>
+
 
 #ifdef _WIN32
 #include <io.h>
@@ -38,6 +48,9 @@ void navi_splitpath(const char *path_, const char *ext_);
 int itoa_bin(unsigned int data, char *str);
 
 #endif
+
+void regionGrowingSegmenation();
+
 
 #ifndef WIN32
 void splitpath(const char *path, char *drive, char *dir, char *fname, char *ext);

@@ -14,6 +14,8 @@
 using namespace std;
 int main()
 {
+	regionGrowingSegmenation();
+
     std::cout << "char\t" << sizeof(char) << std::endl;
     std::cout << "unsigned char\t" << sizeof(unsigned char) << std::endl;
     std::cout << "char*\t" << sizeof(char*) << std::endl << std::endl;
